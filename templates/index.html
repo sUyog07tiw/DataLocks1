@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
+  <title>Superadmin Portal</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #1a1a2e;
+      color: #f5f5f5;
+    }
+    .navbar {
+      background-color: #162447;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+    .navbar-brand {
+      color: #e43f5a;
+    }
+    .container {
+      margin-top: 40px;
+      max-width: 900px;
+      background-color: #1f4068;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+    }
+    .form-control {
+      background-color: #1b1b2f;
+      color: #f5f5f5;
+      border: 1px solid #e43f5a;
+    }
+    .form-control:focus {
+      background-color: #162447;
+      border-color: #e43f5a;
+      box-shadow: 0 0 10px rgba(228, 63, 90, 0.5);
+    }
+    .btn-primary {
+      background-color: #e43f5a;
+      border-color: #e43f5a;
+    }
+    .btn-primary:hover {
+      background-color: #162447;
+      color: #e43f5a;
+    }
+    .footer {
+      background-color: #162447;
+      color: #f5f5f5;
+      text-align: center;
+      padding: 10px;
+      margin-top: 30px;
+    }
+    .table {
+      background-color: #1b1b2f;
+      color: #f5f5f5;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    th, td {
+      text-align: center;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand d-flex align-items-center" href="#">
+      
+      <span style="font-weight: bold; font-size: 1.5rem; color: #e43f5a;">DataLocks</span>
+    </a>
+    <a class="navbar-brand" href="#">Admin Portal</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Manage Users</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Settings</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <h2>Welcome, {{ superuser_username }}! 🤗 </h2>
+</ul>
+
+
+  <!-- Main Content -->
+  <div class="container">
+    <h3 class="text-center mb-4" style="color: #e43f5a;">Superadmin Dashboard</h3>
+
+    <!-- User Management Section -->
+    <h5>Manage Users</h5>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Account Made</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users %}
+        <tr>
+          <td>{{ user.username }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.role }}</td>
+          <td>{{ user.date_time }}</td>
+          <td>
+            <button class="btn btn-danger btn-sm">Delete</button>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+   
+    
+      <div class="form-group">
+        <label for="maintenanceMode">Maintenance Mode:</label>
+        <select class="form-control" id="maintenanceMode">
+          <option>Off</option>
+          <option>On</option>
+        </select>
+      </div>
+    
+      <button type="submit" class="btn btn-primary btn-block">Save Changes</button>
+    </form>
+    
+      <div class="form-group">
+        <label for="maintenanceMode">Maintenance Mode:</label>
+        <select class="form-control" id="maintenanceMode">
+          <option>Off</option>
+          <option>On</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block">Save Changes</button>
+    </form>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2024 Superadmin Portal. All rights reserved.</p>
+  </footer>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
