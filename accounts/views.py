@@ -11,6 +11,9 @@ from django.http import HttpResponseForbidden
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.cache import cache_control
 from django.utils import timezone
+import re
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
 
 
 @csrf_exempt
@@ -60,13 +63,34 @@ def signup_view(request):
         # Check if passwords match
         if password1 != password2:
             return HttpResponse("Passwords do not match!")
+
+        # Check password validation rules
+        if len(password1) > 8:
+            return HttpResponse("Password must not exceed 8 characters.")
+        
+        # Check for at least one uppercase letter, one symbol, and max 8 characters
+        if not re.search(r'[A-Z]', password1):
+            return HttpResponse("Password must contain at least one uppercase letter.")
+        
+        if not re.search(r'[\W_]', password1):  # \W matches any non-word character (including symbols)
+            return HttpResponse("Password must contain at least one symbol.")
+        
+        # Validate the email address
+        try:
+            validate_email(email)  # Validate the email format
+        except ValidationError:
+            return HttpResponse("Invalid email address.")
+        
+        # Check if email already exists
+        if User.objects.filter(email=email).exists():
+            return HttpResponse("This email address is already taken.")
         
         # Create the user
         user = User.objects.create_user(username=username, email=email, password=password1)
         user.save()
         
         return redirect('login')  # Redirect to login page after signup
-    return render(request, 'signup.html')  # Render signup page if GET request
+    return render(request, 'signup.html')  # Render signup page if GET request  # Render signup page if GET request
 
  # Ensure the user is logged in
 @login_required(login_url='login')  # Ensure the user is logged in
