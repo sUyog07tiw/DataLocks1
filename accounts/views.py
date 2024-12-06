@@ -18,7 +18,7 @@ def login_view(request):
     if request.user.is_authenticated:
         if request.user.is_superuser:
             return redirect('index')  # Redirect to the admin dashboard
-        return redirect('base')
+        return render(request, 'base')
     
     if request.method == 'POST':
         username = request.POST.get('username')
