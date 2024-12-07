@@ -21,7 +21,7 @@ def login_view(request):
     if request.user.is_authenticated:
         if request.user.is_superuser:
             return redirect('index')  # Redirect to the admin dashboard
-        return render(request, 'base')
+        return render(request, 'job_list.html')
     
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -39,7 +39,7 @@ def login_view(request):
             if user.is_superuser:
                 return redirect('index')  # Redirect to index page for superadmins
             else:
-                return redirect('base')  # Redirect to base page for regular users
+                return redirect('job_list')  # Redirect to base page for regular users
 
         else:
             return HttpResponse("Invalid username or password!")
@@ -64,10 +64,6 @@ def signup_view(request):
         if password1 != password2:
             return HttpResponse("Passwords do not match!")
 
-        # Check password validation rules
-        if len(password1) > 8:
-            return HttpResponse("Password must not exceed 8 characters.")
-        
         # Check for at least one uppercase letter, one symbol, and max 8 characters
         if not re.search(r'[A-Z]', password1):
             return HttpResponse("Password must contain at least one uppercase letter.")
@@ -99,7 +95,7 @@ def index_view(request):
     # Check if the logged-in user is a superuser
     if not request.user.is_superuser:
         
-        return render(request, 'base.html')
+        return render(request, 'index.html')
     
 
     # Proceed if the user is a superuser
@@ -122,11 +118,7 @@ def index_view(request):
         'users': users,
     }
     return render(request, 'index.html', context)
-
-@login_required(login_url='login')  # Ensure the user is logged in
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
-def base_view(request):
-    return render(request, 'base.html')  
+ 
 
 @login_required
 def delete_user_view(request, user_id):
@@ -144,8 +136,8 @@ def logout_view(request):
     logout(request)
     # Clear the session completely
     request.session.flush()
-    return redirect('login')  # Redirect to the login 
-   
+    return render(request, 'login.html')  # Redirect to the login 
+
 def browse_jobs(request):
-    return render(request, 'jobs')
+    return render(request, 'job')
 

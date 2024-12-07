@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Apply for {{ job.title }}{% endblock %}
+
+{% block content %}
+<h2 class="text-center mb-4">{{ job.title }}</h2>
+<p><strong>Company:</strong> {{ job.company }}</p>
+<p><strong>Location:</strong> {{ job.location }}</p>
+<p><strong>Job Type:</strong> {{ job.get_job_type_display }}</p>
+<p><strong>Salary:</strong> {{ job.salary }}</p>
+<p><strong>Requirements:</strong> {{ job.requirements }}</p>
+<p><strong>Description:</strong> {{ job.description }}</p>
+
+<hr class="my-4">
+
+<!-- Application Form -->
+<form action="{% url 'apply_job' job.id %}" method="post" enctype="multipart/form-data" class="mt-4">
+{% csrf_token %}
+    <!-- Name -->
+    <div class="mb-3">
+        <label for="name" class="form-label">Full Name</label>
+        <input type="text" class="form-control" id="name" name="name" placeholder="Enter your full name" required>
+    </div>
+
+    <!-- Email -->
+    <div class="mb-3">
+        <label for="email" class="form-label">Email Address</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+    </div>
+
+    <!-- Resume Upload -->
+    <div class="mb-4">
+        <label for="resume" class="form-label">Upload Resume</label>
+        <input type="file" class="form-control" id="resume" name="resume" required>
+        <small class="text-muted">Accepted formats: .pdf, .docx</small>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-primary w-100">Apply Now</button>
+</form>
+{% endblock %}

@@ -29,6 +29,8 @@ DEBUG = True
 TIME_ZONE = 'Asia/Kathmandu'
 USE_TZ = True
 
+LOGIN_URL = '/accounts/login/' 
+LOGIN_URL = '/accounts/logout/' 
 
 ALLOWED_HOSTS = []
 
@@ -45,6 +47,7 @@ INSTALLED_APPS = [
     "accounts",
     "forget_password",
     'login_history',
+    "enroll"
 ]
 
 MIDDLEWARE = [
@@ -135,3 +138,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 #Email
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+import os
+
+# Media settings
+MEDIA_URL = '/media/'  # The URL for accessing media files in the browser
+MEDIA_ROOT = os.path.join(os.path.expanduser('~'), 'Desktop', 'Django', 'resumes')
