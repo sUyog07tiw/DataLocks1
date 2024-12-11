@@ -21,7 +21,7 @@ def login_view(request):
     if request.user.is_authenticated:
         if request.user.is_superuser:
             return redirect('index')  # Redirect to the admin dashboard
-        return render(request, 'job_list.html')
+        return render(request, 'base.html')
     
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -39,7 +39,7 @@ def login_view(request):
             if user.is_superuser:
                 return redirect('index')  # Redirect to index page for superadmins
             else:
-                return redirect('job_list')  # Redirect to base page for regular users
+                return redirect('base')  # Redirect to base page for regular users
 
         else:
             return HttpResponse("Invalid username or password!")

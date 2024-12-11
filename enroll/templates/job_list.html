@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="container mt-5">
-    <h1 class="text-center mb-4">Available Jobs</h1>
+    <h1 class="text-center mb-4" style = "color: white; "></h1>
     <div class="row">
         {% if jobs %}
             {% for job in jobs %}
@@ -21,7 +21,7 @@
             {% endfor %}
         {% else %}
             <div class="col-12">
-                <p class="text-center text-muted">No jobs available at the moment.</p>
+                <p class="text-center text-muted"></p>
             </div>
         {% endif %}
     </div>

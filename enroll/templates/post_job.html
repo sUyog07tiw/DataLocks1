@@ -3,62 +3,109 @@
 {% block title %}Post a Job{% endblock %}
 
 {% block content %}
-<h2 class="text-center mb-4">
-    {% if job %}
-        Update Job: {{ job.title }}
-    {% else %}
-        Post a New Job
-    {% endif %}
-</h2>
-
-<form method="post">
-    {% csrf_token %}
-    <div class="mb-3">
-        <label for="title" class="form-label">Job Title</label>
-        <input type="text" class="form-control" id="title" name="title" value="{{ form.title.value|default_if_none:'' }}" required>
+<div class="container">
+    <div class="hero-section">
+        <h1>
+            {% if job %}
+                Update Job: {{ job.title }}
+            {% else %}
+                Post a New Job
+            {% endif %}
+        </h1>
+        <p>Share job opportunities or edit existing job details with ease.</p>
     </div>
 
-    <div class="mb-3">
-        <label for="company" class="form-label">Company Name</label>
-        <input type="text" class="form-control" id="company" name="company" value="{{ form.company.value|default_if_none:'' }}" required>
-    </div>
-
-    <div class="mb-3">
-        <label for="location" class="form-label">Location</label>
-        <input type="text" class="form-control" id="location" name="location" value="{{ form.location.value|default_if_none:'' }}" required>
-    </div>
-
-    <div class="mb-3">
-        <label for="job_type" class="form-label">Job Type</label>
-        <select class="form-control" id="job_type" name="job_type" required>
-            <option value="full-time" {% if form.job_type.value == 'full-time' %}selected{% endif %}>Full-time</option>
-            <option value="part-time" {% if form.job_type.value == 'part-time' %}selected{% endif %}>Part-time</option>
-            <option value="contract" {% if form.job_type.value == 'contract' %}selected{% endif %}>Contract</option>
-            <option value="freelance" {% if form.job_type.value == 'freelance' %}selected{% endif %}>Freelance</option>
-        </select>
-    </div>
-
-    <div class="mb-3">
-        <label for="description" class="form-label">Job Description</label>
-        <textarea class="form-control" id="description" name="description" rows="4" required>{{ form.description.value|default_if_none:'' }}</textarea>
-    </div>
-
-    <div class="mb-3">
-        <label for="salary" class="form-label">Salary</label>
-        <input type="text" class="form-control" id="salary" name="salary" value="{{ form.salary.value|default_if_none:'' }}" required>
-    </div>
-
-    <div class="mb-3">
-        <label for="requirements" class="form-label">Job Requirements</label>
-        <textarea class="form-control" id="requirements" name="requirements" rows="4" required>{{ form.requirements.value|default_if_none:'' }}</textarea>
-    </div>
-
-    <button type="submit" class="btn btn-primary w-100 mb-4">
-        {% if job %}
-            Update Job
-        {% else %}
-            Post Job
-        {% endif %}
-    </button>
-</form>
+            <div class="card mt-5 shadow-sm border-0">
+                <div class="card-body">
+                    <h2 class="card-title text-center text-primary fw-bold">
+                        {% if job %}
+                            Update Job Details
+                        {% else %}
+                            Create a New Job Listing
+                        {% endif %}
+                    </h2>
+            
+                    <form method="post" class="mt-4">
+                        {% csrf_token %}
+                        <!-- Job Title -->
+                        <div class="mb-4">
+                            <label for="title" class="form-label fw-semibold">Job Title</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-briefcase"></i></span>
+                                <input type="text" class="form-control shadow-sm" id="title" name="title" 
+                                    value="{{ form.title.value|default_if_none:'' }}" 
+                                    placeholder="e.g., Software Engineer" required>
+                            </div>
+                        </div>
+            
+                        <!-- Company Name -->
+                        <div class="mb-4">
+                            <label for="company" class="form-label fw-semibold">Company Name</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-building"></i></span>
+                                <input type="text" class="form-control shadow-sm" id="company" name="company" 
+                                    value="{{ form.company.value|default_if_none:'' }}" 
+                                    placeholder="e.g., Tech Corp" required>
+                            </div>
+                        </div>
+            
+                        <!-- Location -->
+                        <div class="mb-4">
+                            <label for="location" class="form-label fw-semibold">Location</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+                                <input type="text" class="form-control shadow-sm" id="location" name="location" 
+                                    value="{{ form.location.value|default_if_none:'' }}" 
+                                    placeholder="e.g., Remote or New York, NY" required>
+                            </div>
+                        </div>
+            
+                        <!-- Job Type -->
+                        <div class="mb-4">
+                            <label for="job_type" class="form-label fw-semibold">Job Type</label>
+                            <select class="form-select shadow-sm" id="job_type" name="job_type" required>
+                                <option value="full-time" {% if form.job_type.value == 'full-time' %}selected{% endif %}>Full-time</option>
+                                <option value="part-time" {% if form.job_type.value == 'part-time' %}selected{% endif %}>Part-time</option>
+                                <option value="contract" {% if form.job_type.value == 'contract' %}selected{% endif %}>Contract</option>
+                                <option value="freelance" {% if form.job_type.value == 'freelance' %}selected{% endif %}>Freelance</option>
+                            </select>
+                        </div>
+            
+                        <!-- Job Description -->
+                        <div class="mb-4">
+                            <label for="description" class="form-label fw-semibold">Job Description</label>
+                            <textarea class="form-control shadow-sm" id="description" name="description" 
+                                rows="4" placeholder="Provide a detailed job description" required>{{ form.description.value|default_if_none:'' }}</textarea>
+                        </div>
+            
+                        <!-- Salary -->
+                        <div class="mb-4">
+                            <label for="salary" class="form-label fw-semibold">Salary</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-currency-dollar"></i></span>
+                                <input type="text" class="form-control shadow-sm" id="salary" name="salary" 
+                                    value="{{ form.salary.value|default_if_none:'' }}" 
+                                    placeholder="e.g., $50,000 - $70,000" required>
+                            </div>
+                        </div>
+            
+                        <!-- Job Requirements -->
+                        <div class="mb-4">
+                            <label for="requirements" class="form-label fw-semibold">Job Requirements</label>
+                            <textarea class="form-control shadow-sm" id="requirements" name="requirements" 
+                                rows="4" placeholder="List the job requirements" required>{{ form.requirements.value|default_if_none:'' }}</textarea>
+                        </div>
+            
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary w-100 py-2 shadow-sm">
+                            {% if job %}
+                                <i class="bi bi-pencil-square me-2"></i>Update Job
+                            {% else %}
+                                <i class="bi bi-send me-2"></i>Post Job
+                            {% endif %}
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
 {% endblock %}

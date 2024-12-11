@@ -3,39 +3,64 @@
 {% block title %}Apply for {{ job.title }}{% endblock %}
 
 {% block content %}
-<h2 class="text-center mb-4">{{ job.title }}</h2>
-<p><strong>Company:</strong> {{ job.company }}</p>
-<p><strong>Location:</strong> {{ job.location }}</p>
-<p><strong>Job Type:</strong> {{ job.get_job_type_display }}</p>
-<p><strong>Salary:</strong> {{ job.salary }}</p>
-<p><strong>Requirements:</strong> {{ job.requirements }}</p>
-<p><strong>Description:</strong> {{ job.description }}</p>
+<h2 class="text-center mb-4 text-primary fw-bold"></h2>
+<div class="card shadow-sm border-0 p-4 mb-4">
+    <h2 class="text-center mb-4 text-primary fw-bold">{{ job.title }}</h2>
+    <div class="card-body">
+        <!-- Job Details -->
+        <p class="fw-semibold"><i class="bi bi-building me-2"></i><strong>Company:</strong> {{ job.company }}</p>
+        <p class="fw-semibold"><i class="bi bi-geo-alt me-2"></i><strong>Location:</strong> {{ job.location }}</p>
+        <p class="fw-semibold"><i class="bi bi-clock me-2"></i><strong>Job Type:</strong> {{ job.get_job_type_display }}</p>
+        <p class="fw-semibold"><i class="bi bi-currency-dollar me-2"></i><strong>Salary:</strong> {{ job.salary }}</p>
+        <p class="fw-semibold"><i class="bi bi-card-checklist me-2"></i><strong>Requirements:</strong> {{ job.requirements }}</p>
+        <p class="fw-semibold"><i class="bi bi-file-text me-2"></i><strong>Description:</strong> {{ job.description }}</p>
+    </div>
+</div>
 
 <hr class="my-4">
 
 <!-- Application Form -->
-<form action="{% url 'apply_job' job.id %}" method="post" enctype="multipart/form-data" class="mt-4">
-{% csrf_token %}
-    <!-- Name -->
-    <div class="mb-3">
-        <label for="name" class="form-label">Full Name</label>
-        <input type="text" class="form-control" id="name" name="name" placeholder="Enter your full name" required>
+<div class="card shadow-sm border-0 p-4">
+    <div class="card-body">
+        <h3 class="text-center text-primary fw-bold mb-4">Apply for {{ job.title }}</h3>
+        <form action="{% url 'apply_job' job.id %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <!-- Full Name -->
+            <div class="mb-4">
+                <label for="name" class="form-label fw-semibold">Full Name</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                    <input type="text" class="form-control shadow-sm" id="name" name="name" 
+                           placeholder="Enter your full name" required>
+                </div>
+            </div>
+            
+            <!-- Email -->
+            <div class="mb-4">
+                <label for="email" class="form-label fw-semibold">Email Address</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                    <input type="email" class="form-control shadow-sm" id="email" name="email" 
+                           placeholder="Enter your email" required>
+                </div>
+            </div>
+            
+            <!-- Resume Upload -->
+            <div class="mb-4">
+                <label for="resume" class="form-label fw-semibold">Upload Resume</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-upload"></i></span>
+                    <input type="file" class="form-control shadow-sm" id="resume" name="resume" required>
+                </div>
+                <small class="text-muted">Accepted formats: .pdf, .docx</small>
+            </div>
+            
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary w-100 py-2 shadow-sm">
+                <i class="bi bi-send me-2"></i>Apply Now
+            </button>
+        </form>
     </div>
-
-    <!-- Email -->
-    <div class="mb-3">
-        <label for="email" class="form-label">Email Address</label>
-        <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
-    </div>
-
-    <!-- Resume Upload -->
-    <div class="mb-4">
-        <label for="resume" class="form-label">Upload Resume</label>
-        <input type="file" class="form-control" id="resume" name="resume" required>
-        <small class="text-muted">Accepted formats: .pdf, .docx</small>
-    </div>
-
-    <!-- Submit Button -->
-    <button type="submit" class="btn btn-primary w-100">Apply Now</button>
-</form>
+</div>
 {% endblock %}
